@@ -31,6 +31,18 @@ const ARTICLES = mongoose.model(
         },
         author: {
             type: String
+        },
+        category: {
+            type: String,
+            required: true
+        },
+        isReviewed: {
+            type: Boolean,
+            default: false,
+        },
+        rating: {
+            type: Number,
+            default: 0,
         }
     }, {
         timestamps: true,
@@ -111,11 +123,21 @@ const LIKES = mongoose.model(
         articleId: String,
     })
 )
+const ROLES = mongoose.model(
+    "role_controller", new mongoose.Schema({
+        user: String,
+        role: String,
+        request: String
+    }, {
+        timestamps: true,
+    })
+)
 
 module.exports = {
     ARTICLES,
     USER,
     DRAFTS,
     COMMENTS,
-    LIKES
+    LIKES,
+    ROLES
 }

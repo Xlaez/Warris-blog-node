@@ -1,4 +1,4 @@
-const { USER } = require("../models/app.model");
+const { USER, ROLES } = require("../models/app.model");
 
 const saveUserData = async (req, res) => {
     var image = req.file;
@@ -49,14 +49,6 @@ const getSingleUser = async (req, res) => {
     return res.status(200).json({ status: "success", data: users });
 }
 
-const makeAdmin = async (req, res) => {
-    var user = await USER.findById(req.params.id);
-    if (!user) return res.status(400).json({ status: "fail" });
-    user.role = "admin";
-    user = await user.save();
-    delete user.password;
-    return res.status(200).json({ status: "success", data: user })
-}
 
 const setLightTheme = async (req, res) => {
     var user = await USER.findById(req.get("userAccess"));
@@ -73,12 +65,45 @@ const setAnimations = async (req, res) => {
     user = await user.save();
     return res.status(201).json({ status: "success" })
 }
+
+const requestEditor = async (req, res) => {
+    var { id } = req.params;
+    var user = await USER.findById(id);
+    console.log(user)
+    if (!user) return res.status(400).json({ status: "fail" });
+    var username = user.name;
+    var role = user.role;
+    var request = "editor"
+    var create = await ROLES.create({
+        user: username,
+        role: role,
+        request: request,
+    });
+    if (!create) return res.status(400).send("an error")
+    return res.status(200).json({ status: "success" });
+}
+
+const requestAdmin = async (req, res) => {
+    var id = req.params.id
+    var user = await USER.findById(id);
+    if (!user) return res.status(400).json({ status: "fail" })
+    var request = "admin";
+    var create = await ROLES.create({
+        user: user.name,
+        role: user.role,
+        request: request,
+    });
+    if (!create) return res.status(400).send("an error")
+    return res.status(200).json({ status: "success" });
+}
+
 module.exports = {
     saveUserData,
     deleteUser,
     getSingleUser,
     getUsers,
-    makeAdmin,
     setLightTheme,
-    setAnimations
+    setAnimations,
+    requestEditor,
+    requestAdmin
 }

@@ -6,7 +6,7 @@ var TOKEN_SECRET = process.env.ACCESSTOKEN;
 
 assignToken = (user) => {
     return sign({ id: user._id }, TOKEN_SECRET, {
-        expiresIn: 3600,
+        expiresIn: 36000,
     });
 };
 

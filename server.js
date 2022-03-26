@@ -13,6 +13,7 @@ const { articleRoute } = require('./routes/articles.routes');
 const { usersRoute } = require('./routes/users.routes');
 const { draftRoute } = require('./routes/drafts.routes');
 const { isAuth } = require('./middleware/isAuth');
+const { adminRoute } = require('./routes/admin.routes');
 
 const accessLogStream = createWriteStream(path.join(__dirname, 'logs', 'access.log'), { flags: 'a' });
 const server = express();
@@ -29,6 +30,7 @@ server.use('/api/auth', authRoute);
 server.use('/api/articles', articleRoute);
 server.use('/api/users', [isAuth], usersRoute);
 server.use('/api/drafts', [isAuth], draftRoute);
+server.use('/api/admin', [isAuth], adminRoute);
 // SERVER CONFIGURATIONS
 var port = process.env.PORT || 8082;
 
