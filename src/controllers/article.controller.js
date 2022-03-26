@@ -117,7 +117,7 @@ const setViews = async (req, res) => {
 const getMostLikedArticle = async (req, res) => {
     var article = await ARTICLES.find({ userId: req.params.id }).sort(
         { "likes": -1 }).limit(1)
-    return res.json({ article })
+    return res.status(200).json({ data: article })
 
 }
 
@@ -125,15 +125,15 @@ const getMostViewedArticle = async (req, res) => {
     var article = await ARTICLES.find({
         userId: req.params.id
     }).sort({ "views": -1 }).limit(1)
-    return res.json({ article });
+    return res.status(200).json({ data: article });
 
 }
 
-const getLatestArticle = async(req, res)=>{
-    var article = await ARTICLES.find({userId:req.params.id}).sort({
-        "createdAt":-1
+const getLatestArticle = async (req, res) => {
+    var article = await ARTICLES.find({ userId: req.params.id }).sort({
+        "createdAt": -1
     }).limit(1)
-    return res.status(200).json({article})
+    return res.status(200).json({ data: article })
 }
 
 const getAllUserArticles = async (req, res) => {
@@ -162,28 +162,80 @@ const getTotalLikedUserArticle = async (req, res) => {
 }
 
 
-const getlatesThreeArticles = async(req, res)=>{
+const getlatesThreeArticles = async (req, res) => {
     var articles = await ARTICLES.find().sort({
         "createdAt": -1
-    })   .limit(3)
-    return res.status(200).json({status:"success", data:articles});
+    }).limit(3)
+    return res.status(200).json({ status: "success", data: articles });
 
 }
 
-const getThreeMostViewed = async(req, res)=>{
+const getThreeMostViewed = async (req, res) => {
     var articles = await ARTICLES.find().sort({
         "views": -1
     }).limit(3)
-    return res.status(200).json({status:"success", data:articles})
+    return res.status(200).json({ status: "success", data: articles })
 }
 
-const getThreeMostLikes = async(req, res)=>{
+const getThreeMostLikes = async (req, res) => {
     var articles = await ARTICLES.find().sort({
         "likes": -1
     }).limit(3)
-    return res.status(200).json({status:"success", data:articles})
+    return res.status(200).json({ status: "success", data: articles })
 }
 
+const sortByCategory = async (req, res) => {
+    var { category } = req.params;
+    var articles = await ARTICLES.find({ category: category }).sort({
+        "createdAt": -1
+    });
+    if (!articles) return res.status(400).json({ message: "does not exist", status: "fail" });
+    return res.status(200).json({ status: "success", data: articles });
+}
+
+const getHighestReviewedArticle = async (req, res) => {
+    var article = await ARTICLES.find({
+        userId: req.params.id
+    }).sort({ "rating": -1 }).limit(1)
+    if (!article) return res.status(400).json({ status: "fail" })
+    return res.status(200).json({ status: "success", data: article });
+}
+
+const getSportArticles = async (req, res) => {
+    var articles = await ARTICLES.find({ category: "sport" }).sort({
+        createdAt: "desc",
+    }).catch(err => {
+        return res.status(400).json({ status: "fail" })
+    })
+    return res.status(200).json({ status: "success", data: articles })
+}
+
+const getEntertainmentArticles = async (req, res) => {
+    var articles = await ARTICLES.find({ category: "entertainment" }).sort({
+        createdAt: "desc",
+    }).catch(err => {
+        return res.status(400).json({ status: "fail" })
+    })
+    return res.status(200).json({ status: "success", data: articles })
+}
+
+const getTechArticles = async (req, res) => {
+    var articles = await ARTICLES.find({ category: "tech" }).sort({
+        createdAt: "desc",
+    }).catch(err => {
+        return res.status(400).json({ status: "fail" })
+    })
+    return res.status(200).json({ status: "success", data: articles })
+}
+
+const getEducationalArticles = async (req, res) => {
+    var articles = await ARTICLES.find({ category: "education" }).sort({
+        createdAt: "desc",
+    }).catch(err => {
+        return res.status(400).json({ status: "fail" })
+    })
+    return res.status(200).json({ status: "success", data: articles })
+}
 module.exports = {
     createArticle,
     getSingleArticle,
@@ -203,5 +255,11 @@ module.exports = {
     getLatestArticle,
     getlatesThreeArticles,
     getThreeMostViewed,
-    getThreeMostLikes
+    getThreeMostLikes,
+    sortByCategory,
+    getHighestReviewedArticle,
+    getSportArticles,
+    getEntertainmentArticles,
+    getTechArticles,
+    getEducationalArticles
 }
