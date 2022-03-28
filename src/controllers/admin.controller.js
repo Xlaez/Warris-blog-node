@@ -1,4 +1,4 @@
-const { ROLES, USER, ARTICLES } = require("../models/app.model")
+const { ROLES, USER, ARTICLES, MESSAGES } = require("../models/app.model")
 
 const getEditorRequest = async (req, res) => {
     var request = await ROLES.find().sort({
@@ -85,6 +85,21 @@ const getAuthorWithHighestArticles = async (req, res) => {
     return res.status(200).json({ status: "success", data: author.author });
 }
 
+const sendMsg = async (req, res) => {
+    var { to } = req.body;
+    var user = await USER.findOne({ email: to });
+    if (!user) return res.status(400).json({ status: "fail", message: "No user found" })
+    var userId = user._id;
+    const msg = await MESSAGES.create({
+        message: {
+            text: req.body.text,
+            from: req.body.from,
+            to: userId,
+        }
+    })
+    return res.status(201).json({ status: "success" })
+}
+
 module.exports = {
     getEditorRequest,
     makeAdmin,
@@ -95,5 +110,6 @@ module.exports = {
     getTotalArticles,
     getAllAuthors,
     getAllEditors,
-    getAuthorWithHighestArticles
+    getAuthorWithHighestArticles,
+    sendMsg,
 }

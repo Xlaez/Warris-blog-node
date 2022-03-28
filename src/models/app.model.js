@@ -127,7 +127,27 @@ const ROLES = mongoose.model(
     "role_controller", new mongoose.Schema({
         user: String,
         role: String,
-        request: String
+        request: String,
+        image: String,
+    }, {
+        timestamps: true,
+    })
+)
+
+const MESSAGES = mongoose.model(
+    "messages", new mongoose.Schema({
+        message: {
+            text: {
+                type: String
+            },
+            from: {
+                type: String,
+            },
+            to: {
+                type: String,
+            },
+
+        },
     }, {
         timestamps: true,
     })
@@ -139,5 +159,6 @@ module.exports = {
     DRAFTS,
     COMMENTS,
     LIKES,
-    ROLES
+    ROLES,
+    MESSAGES
 }
