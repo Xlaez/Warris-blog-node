@@ -73,11 +73,13 @@ const requestEditor = async (req, res) => {
     if (!user) return res.status(400).json({ status: "fail" });
     var username = user.name;
     var role = user.role;
+    var image = user.image;
     var request = "editor"
     var create = await ROLES.create({
         user: username,
         role: role,
         request: request,
+        image: image,
     });
     if (!create) return res.status(400).send("an error")
     return res.status(200).json({ status: "success" });

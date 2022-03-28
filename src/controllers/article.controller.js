@@ -1,14 +1,19 @@
+const { htmlToText } = require('html-to-text')
 const { ARTICLES, USER, COMMENTS } = require("../models/app.model");
 
 const createArticle = async (req, res) => {
     var body = req.body;
+    var newContent = htmlToText(body.content)
     var userId = req.get("userAccess");
     var image = req.file;
     if (!userId) return res.status(403).json({ message: "UserId expected but got none", status: "fail" });
     var authorData = await USER.findOne({ _id: userId });
     if (!authorData) return res.status(400).json({ message: "Something is critically wrong", status: "fail" });
     var articles = new ARTICLES({
-        ...body,
+        title: body.title,
+        description: body.description,
+        content: newContent,
+        category: body.category,
         author: authorData.name,
         image: image.path,
         userId: userId
@@ -37,10 +42,11 @@ const editArticle = async (req, res) => {
     var { id } = req.params;
     var body = req.body;
     var image = req.file;
+    var newContent = htmlToText(body.content)
     var data = {
         title: body.title,
         description: body.description,
-        content: body.content,
+        content: newContent,
         image: image.path,
     }
     var article = await ARTICLES.findByIdAndUpdate(id, data);
