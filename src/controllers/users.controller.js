@@ -1,4 +1,4 @@
-const { USER, ROLES } = require("../models/app.model");
+const { USER, ROLES, MESSAGES } = require("../models/app.model");
 
 const saveUserData = async (req, res) => {
     var image = req.file;
@@ -76,6 +76,7 @@ const requestEditor = async (req, res) => {
     var image = user.image;
     var request = "editor"
     var create = await ROLES.create({
+        userId: id,
         user: username,
         role: role,
         request: request,
@@ -99,6 +100,13 @@ const requestAdmin = async (req, res) => {
     return res.status(200).json({ status: "success" });
 }
 
+const getAdminsMsg = async (req, res) => {
+    var msg = await MESSAGES.find({ to: req.params.id }).sort({
+        createdAt: "desc",
+    });
+    return res.status(200).json({ status: "success", data: msg });
+}
+
 module.exports = {
     saveUserData,
     deleteUser,
@@ -107,5 +115,6 @@ module.exports = {
     setLightTheme,
     setAnimations,
     requestEditor,
-    requestAdmin
+    requestAdmin,
+    getAdminsMsg
 }

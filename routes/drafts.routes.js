@@ -3,10 +3,10 @@ const { createDraft, deleteDraft, fetchDraft, fetchDrafts } = require('../src/co
 
 var router = Router();
 
+router.get('/', fetchDrafts)
+router.get('/:id', fetchDraft)
 router.post('/', createDraft);
 router.delete('/:id', deleteDraft)
-router.get('/:id', fetchDraft)
-router.get('/', fetchDrafts)
 
 
 module.exports.draftRoute = router;

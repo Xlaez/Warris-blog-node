@@ -100,6 +100,39 @@ const sendMsg = async (req, res) => {
     return res.status(201).json({ status: "success" })
 }
 
+const deleteRequests = async (req, res) => {
+    await ROLES.findByIdAndDelete(req.params.id).catch(
+        err => { return res.status(400).json({ status: "fail", err }) }
+    )
+    return res.status(200).json({ status: "success" });
+}
+
+const acceptRequest = async (req, res) => {
+    var role = req.body.role;
+    if (role == "editor") {
+        var user = await USER.findById(req.params.id);
+        if (!user) return res.status(400).json({ status: "fail" });
+        user.role = "editor";
+        user = await user.save();
+        delete user.password;
+        await ROLES.findByIdAndDelete(req.params.id).catch(
+            err => { return res.status(400).json({ status: "fail", err }) }
+        )
+        return res.status(200).json({ status: "success" })
+    }
+    if (role == "admin") {
+        var user = await USER.findById(req.params.id);
+        if (!user) return res.status(400).json({ status: "fail" });
+        user.role = "admin";
+        user = await user.save();
+        delete user.password;
+        await ROLES.findByIdAndDelete(req.params.id).catch(
+            err => { return res.status(400).json({ status: "fail", err }) }
+        )
+        return res.status(200).json({ status: "success" })
+    }
+}
+
 module.exports = {
     getEditorRequest,
     makeAdmin,
@@ -112,4 +145,6 @@ module.exports = {
     getAllEditors,
     getAuthorWithHighestArticles,
     sendMsg,
+    deleteRequests,
+    acceptRequest
 }
