@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getEditorRequest, makeAdmin, makeEditor, reviewArticle, getAllAuthors, getAllEditors, getTotalArticles, getTotalAuthors, getTotalEditors, getAuthorWithHighestArticles, sendMsg, deleteRequests, acceptRequest } = require('../src/controllers/admin.controller');
+const { getEditorRequest, makeAdmin, makeEditor, reviewArticle, getAllAuthors, getAllEditors, getTotalArticles, getTotalAuthors, getTotalEditors, getAuthorWithHighestArticles, sendMsg, deleteRequests, acceptRequest, getUserByEmail } = require('../src/controllers/admin.controller');
 
 const router = Router();
 router.get("/request", getEditorRequest);
@@ -9,6 +9,7 @@ router.get("/total/articles", getTotalArticles)
 router.get('/total/authors', getTotalAuthors);
 router.get('/total/editors', getTotalEditors)
 router.get('/author/article/most', getAuthorWithHighestArticles);
+router.post("/user", getUserByEmail)
 router.post('/request', acceptRequest)
 router.post("/send/msg", sendMsg);
 router.post('/make/admin/:id', makeAdmin);
