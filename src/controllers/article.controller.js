@@ -3,6 +3,7 @@ const { ARTICLES, USER, COMMENTS } = require("../models/app.model");
 
 const createArticle = async (req, res) => {
     var body = req.body;
+    if (!req.file) return res.status(500).json({ status: "fail" })
     var newContent = htmlToText(body.content)
     var userId = req.get("userAccess");
     var image = req.file;

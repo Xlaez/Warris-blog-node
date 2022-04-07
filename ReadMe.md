@@ -58,14 +58,86 @@
 </p>
 <strong>API end points for article routes:</strong>
 <p><strong> after "http://localhost:8082/api"</strong></p>
+<hr>
+<strong>GET requests</strong>
 <ol>
-    <li>/articles/</li>
-    <li>/articles/:id</li>
-    <li>/articles/sport</li>
-    <li>/articles/tech</li>
-    <li>/articles/entertainment</li>
-    <li>/articles/education</li>
-    <li>/articles/like/:id</li>
+    <li>/articles/
+        <ul>
+            <li>For getting all articles</li>
+        </ul>
+    </li>
+    <li>/articles/:id
+        <ul>
+            <li>For getting a specific article, the <strong>id</strong>param is the article id passed from the client side. </li>
+        </ul>
+    </li>
+    <li>/articles/sport
+        <ul>
+            <li>For getting all articles with category of sport only.</li>
+        </ul>
+    </li>
+    <li>/articles/tech
+        <ul>
+            <li>For getting all articles with category of tech.</li>
+        </ul>
+    </li>
+    <li>/articles/entertainment
+        <ul>
+            <li>For getting all articles with category of entertainment.</li>
+        </ul>
+    </li>
+    <li>/articles/education
+        <ul>
+            <li>For getting all articles with category of education.</li>
+            
+        </ul>
+    </li>
+    <li>/articles/like/:id
+        <ul><li>
+            For getting likes of an article ,<strong>id</strong> param is sent from the client side.
+        </li></ul>
+    </li>
+    <li>/articles/views/:id
+        <ul><li>
+            For getting views of an article ,<strong>id</strong> param is sent from the client side.
+        </li></ul>
+    </li>
+    <li>/articles/latest/articles
+        <ul><li>
+            For getting the three most recent articles.
+        </li></ul>
+    </li>    
+    <li>/articles/latest/views
+        <ul>
+            <li>For getting three most viewed articles</li>
+        </ul>
+    </li>    
+    <li>/articles/latest/likes</li>    
+    <li>/articles/sort/:category</li>
+    <li>/articles/review/:id</li>
+    <li>/articles/latest/article/:id</li>    
+    <li>/articles/all/article/:id</li>
+    <li>/articles/all/view/:id</li>
+    <li>/articles/all/like/:id</li>
+    <li>/articles/likes/:id</li>
     <li>/articles/views/:id</li>
-    
+    <li>/articles/comment/:id</li>
+</ol>
+<strong>POST requests</strong>
+<ol>
+    <li>/articles/like/:id</li>
+    <li>/articles/</li>
+    <li>/articles/unlike/:id</li>
+    <li>
+    /articles/views/:id
+    </li>
+    <li>/articles/comment/:id</li>
+</ol>
+<strong>PUT request</strong>
+<ol>
+    <li>/articles/:id</li>
+</ol>
+<strong>DELETE request</strong>
+<ol>
+    <li>/articles/:id</li>
 </ol>

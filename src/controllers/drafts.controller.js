@@ -23,7 +23,7 @@ const fetchDraft = async (req, res) => {
 const fetchDrafts = async (req, res) => {
     var draft = await DRAFTS.find({ userId: req.get("userAccess") }).sort({
         createdAt: "desc",
-    });
+    }).limit(1);
     if (!draft) return res.status(400).json({ status: "fail" });
     return res.status(200).json({ status: "success", data: draft })
 }

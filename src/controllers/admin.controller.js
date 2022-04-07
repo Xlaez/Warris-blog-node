@@ -14,7 +14,7 @@ const makeAdmin = async (req, res) => {
     user.role = "admin";
     user = await user.save();
     delete user.password;
-    return res.status(200).json({ status: "success", data: user })
+    return res.status(200).json({ status: "success", data: user.name })
 }
 
 const makeEditor = async (req, res) => {
@@ -133,6 +133,15 @@ const acceptRequest = async (req, res) => {
     }
 }
 
+const getUserByEmail = async (req, res) => {
+
+    var { email } = req.body;
+    var isUser = await USER.findOne({ email: email });
+    if (!isUser) return res.status(400).json({ status: "fail" });
+    delete isUser.password;
+    return res.status(200).json({ status: "success", data: isUser })
+}
+
 module.exports = {
     getEditorRequest,
     makeAdmin,
@@ -146,5 +155,6 @@ module.exports = {
     getAuthorWithHighestArticles,
     sendMsg,
     deleteRequests,
-    acceptRequest
+    acceptRequest,
+    getUserByEmail
 }
