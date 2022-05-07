@@ -20,7 +20,7 @@ const server = express();
 
 // USE MIDDLLE WARES AND PACKAGES
 server.use(cors());
-server.use(header);
+// server.use(header);
 server.use(morgan('combined', { stream: accessLogStream }));
 server.use(urlencoded({ extended: true }))
 server.use(express.json());
