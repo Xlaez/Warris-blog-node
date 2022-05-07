@@ -26,6 +26,7 @@ server.use(urlencoded({ extended: true }))
 server.use(express.json());
 server.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"));
 server.use('/assets/images', express.static(path.join(__dirname, "assets", "images")));
+server.use('/assets/images', express.static(path.join(__dirname, "lib", "images")));
 server.use('/api/auth', authRoute);
 server.use('/api/articles', articleRoute);
 server.use('/api/users', [isAuth], usersRoute);
