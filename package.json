@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "\"A simple and yet very powerful blog",
   "scripts": {
-    "serve": "node server.js",
-    "start": "nodemon server.js"
+    "serve": "nodemon server.js",
+    "start": "node server.js"
   },
   "main": "server.js",
   "author": "xlaez_kamou",
@@ -30,5 +30,6 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
-  }
+  },
+
 }
